@@ -59,11 +59,14 @@ class PtzCamera(object):
         self.config.auto_focus('off')
 
     def _stop_focus(self):
+        self.camera.stop_focus()
+
+    def _reset_focus(self):
         self.config.auto_focus('on')
 
     def _update_focus(self, joystick_data):
-        # FIXME
-        pass
+        focus = int(joystick_data[2] * joystick_data[2] * joystick_data[2] * 100)
+        self.camera.continuous_focus(focus)
 
     def _handle_button_press(self, event: Event):
         match event.button:
@@ -117,8 +120,7 @@ class PtzCamera(object):
                 # FIXME
                 pass
             case Buttons.L:
-                # FIXME
-                pass
+                self._reset_focus()
             case Buttons.R:
                 # FIXME
                 pass

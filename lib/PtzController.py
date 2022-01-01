@@ -163,9 +163,9 @@ class PtzController(object):
         joystick_data = self._map_joystick(data)
 
         if (self.last_joystick_data != joystick_data):
-            modifier = self.buttons[Buttons.R].state in [ButtonState.PRESSED, ButtonState.MODIFIER]
+            modifier = self.buttons[Buttons.L].state in [ButtonState.PRESSED, ButtonState.MODIFIER]
             if modifier:
-                self.buttons[Buttons.R].state = ButtonState.MODIFIER
+                self.buttons[Buttons.L].state = ButtonState.MODIFIER
 
             start = self.last_joystick_data == (0.0, 0.0, 0.0)
             stop = joystick_data == (0.0, 0.0, 0.0)
