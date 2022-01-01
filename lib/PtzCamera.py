@@ -44,7 +44,7 @@ class PtzCamera(object):
 
     def _set_preset(self, name):
         self._wait_for_movement_end()
-        # FIXME: camera doesn't support setting preset
+        self.config.set_server_preset_name(name)
 
     def _stop_move(self):
         self.camera.stop_move()
@@ -78,6 +78,12 @@ class PtzCamera(object):
                 self._go_to_preset('J3')
             case Buttons.J4:
                 self._go_to_preset('J4')
+            case Buttons.L:
+                # FIXME
+                pass
+            case Buttons.R:
+                # FIXME
+                pass
 
     def _handle_button_press_with_mod(self, event: Event):
         match (event.button, event.modifier):
@@ -94,17 +100,13 @@ class PtzCamera(object):
                 # FIXME
                 pass
             case (Buttons.J1, Buttons.R):
-                # FIXME
-                pass
+                self._set_preset('J1')
             case (Buttons.J2, Buttons.R):
-                # FIXME
-                pass
+                self._set_preset('J2')
             case (Buttons.J3, Buttons.R):
-                # FIXME
-                pass
+                self._set_preset('J3')
             case (Buttons.J4, Buttons.R):
-                # FIXME
-                pass
+                self._set_preset('J4')
 
     def _handle_button_hold(self, event:Event):
         match event.button:
