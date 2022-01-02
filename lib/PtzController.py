@@ -3,8 +3,8 @@ from enum import Enum, unique, auto
 from dataclasses import dataclass
 from collections import namedtuple
 
-import hid
-from hid import HIDException
+from .hid import Device as HIDDevice
+from .hid import HIDException
 
 __all__ = [ 'HIDException', 'Buttons', 'Events', 'Event', 'PtzController' ]
 
@@ -63,7 +63,7 @@ class PtzController(object):
 
         # Open the controller HID device
         self.min_hold_time = hold_time
-        self.hid_device = hid.Device(vid, pid)
+        self.hid_device = HIDDevice(vid, pid)
 
         # Set initial joystick state
         self.last_joystick_data = (0.0, 0.0, 0.0)
