@@ -1,19 +1,14 @@
 import sys
 import time
-from pathlib import Path
 
-sensecam_dir = Path(__file__).resolve().parent / 'sensecam-control'
-sys.path.append(str(sensecam_dir))
-
-from sensecam_control import vapix_control, vapix_config
+from .vapix import CameraControl
 from .PtzController import Buttons, Events, Event
 
 # Camera class
 class PtzCamera(object):
     def __init__(self, ip: str, user: str, password: str):
         # Open connection to the camera
-        self.camera = vapix_control.CameraControl(ip, user, password)
-        self.config = vapix_config.CameraConfiguration(ip, user, password)
+        self.camera = CameraControl(ip, user, password)
         self.camera.set_speed(100)
 
         self.moving = False
@@ -44,7 +39,7 @@ class PtzCamera(object):
 
     def _set_preset(self, name):
         self._wait_for_movement_end()
-        self.config.set_server_preset_name(name)
+        self.camera.set_server_preset_name(name)
 
     def _stop_move(self):
         self.camera.stop_move()
@@ -56,13 +51,13 @@ class PtzCamera(object):
         self.camera.continuous_move(pan, tilt, zoom)
 
     def _start_focus(self):
-        self.config.auto_focus('off')
+        self.camera.auto_focus('off')
 
     def _stop_focus(self):
         self.camera.stop_focus()
 
     def _reset_focus(self):
-        self.config.auto_focus('on')
+        self.camera.auto_focus('on')
 
     def _update_focus(self, joystick_data):
         focus = int(joystick_data[2] * joystick_data[2] * joystick_data[2] * 100)
