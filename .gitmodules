@@ -1,3 +1,0 @@
-[submodule "lib/sensecam-control"]
-	path = lib/sensecam-control
-	url = https://github.com/smartsenselab/sensecam-control.git
