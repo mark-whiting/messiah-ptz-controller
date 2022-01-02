@@ -69,89 +69,77 @@ class PtzCamera(object):
         self.camera.continuous_focus(focus)
 
     def _handle_button_press(self, event: Event):
-        match event.button:
-            case Buttons.J1:
-                self._go_to_preset('J1')
-            case Buttons.J2:
-                self._go_to_preset('J2')
-            case Buttons.J3:
-                self._go_to_preset('J3')
-            case Buttons.J4:
-                self._go_to_preset('J4')
-            case Buttons.L:
-                # FIXME
-                pass
-            case Buttons.R:
-                # FIXME
-                pass
+        if event.button is Buttons.J1:
+            self._go_to_preset('J1')
+        elif event.button is Buttons.J2:
+            self._go_to_preset('J2')
+        elif event.button is Buttons.J3:
+            self._go_to_preset('J3')
+        elif event.button is Buttons.J4:
+            self._go_to_preset('J4')
+        elif event.button is Buttons.L:
+            pass # FIXME
+        elif event.button is Buttons.R:
+            pass # FIXME
 
     def _handle_button_press_with_mod(self, event: Event):
-        match (event.button, event.modifier):
-            case (Buttons.J1, Buttons.L):
-                # FIXME
-                pass
-            case (Buttons.J2, Buttons.L):
-                # FIXME
-                pass
-            case (Buttons.J3, Buttons.L):
-                # FIXME
-                pass
-            case (Buttons.J4, Buttons.L):
-                # FIXME
-                pass
-            case (Buttons.J1, Buttons.R):
-                self._set_preset('J1')
-            case (Buttons.J2, Buttons.R):
-                self._set_preset('J2')
-            case (Buttons.J3, Buttons.R):
-                self._set_preset('J3')
-            case (Buttons.J4, Buttons.R):
-                self._set_preset('J4')
+        value = (event.button, event.modifier)
+
+        if   value == (Buttons.J1, Buttons.L):
+            pass # FIXME
+        elif value == (Buttons.J2, Buttons.L):
+            pass # FIXME
+        elif value == (Buttons.J3, Buttons.L):
+            pass # FIXME
+        elif value == (Buttons.J4, Buttons.L):
+            pass # FIXME
+        elif value == (Buttons.J1, Buttons.R):
+            self._set_preset('J1')
+        elif value == (Buttons.J2, Buttons.R):
+            self._set_preset('J2')
+        elif value == (Buttons.J3, Buttons.R):
+            self._set_preset('J3')
+        elif value == (Buttons.J4, Buttons.R):
+            self._set_preset('J4')
 
     def _handle_button_hold(self, event:Event):
-        match event.button:
-            case Buttons.J1:
-                self._go_home()
-            case Buttons.J2:
-                # FIXME
-                pass
-            case Buttons.J3:
-                # FIXME
-                pass
-            case Buttons.J4:
-                # FIXME
-                pass
-            case Buttons.L:
-                self._reset_focus()
-            case Buttons.R:
-                # FIXME
-                pass
+        if   event.button is Buttons.J1:
+            self._go_home()
+        elif event.button is Buttons.J2:
+            pass # FIXME
+        elif event.button is Buttons.J3:
+            pass # FIXME
+        elif event.button is Buttons.J4:
+            pass # FIXME
+        elif event.button is Buttons.L:
+            self._reset_focus()
+        elif event.button is Buttons.R:
+            pass # FIXME
 
     def _handle_button_event(self, event: Event):
-        match event.type:
-            case Events.BTN_PRESS:
-                self._handle_button_press(event)
-            case Events.BTN_PRESS_WITH_MODIFIER:
-                self._handle_button_press_with_mod(event)
-            case Events.BTN_HOLD:
-                self._handle_button_hold(event)
+        if event.type is Events.BTN_PRESS:
+            self._handle_button_press(event)
+        elif event.type is Events.BTN_PRESS_WITH_MODIFIER:
+            self._handle_button_press_with_mod(event)
+        elif event.type is Events.BTN_HOLD:
+            self._handle_button_hold(event)
 
     def handle_event(self, event: Event):
-        match event.type:
-            # Check for camera pan/tilt/zoom
-            case Events.MOVE_START:
-                self.moving = True
-            case Events.MOVE_END:
-                self.moving = False
-                self._stop_move()
-            # Check for camera focus
-            case Events.FOCUS_START:
-                self.focus = True
-                self._start_focus()
-            case Events.FOCUS_END:
-                self.focus = False
-                self._stop_focus()
-                
+        # Check for camera pan/tilt/zoom
+        if event.type is Events.MOVE_START:
+            self.moving = True
+        elif event.type is Events.MOVE_END:
+            self.moving = False
+            self._stop_move()
+
+        # Check for camera focus
+        if event.type is Events.FOCUS_START:
+            self.focus = True
+            self._start_focus()
+        elif event.type is Events.FOCUS_END:
+            self.focus = False
+            self._stop_focus()
+
         if self.moving:
             if event.type is Events.MOVE_UPDATE:
                 self._update_move(event.joystick)
@@ -160,3 +148,4 @@ class PtzCamera(object):
                 self._update_focus(event.joystick)
         else:
             self._handle_button_event(event)
+

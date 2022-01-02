@@ -191,3 +191,4 @@ class PtzController(object):
         events.extend(self._process_joystick(hid_data[:3]))
 
         return events
+
