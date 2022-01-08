@@ -8,11 +8,7 @@ import requests
 from requests.auth import HTTPDigestAuth
 from bs4 import BeautifulSoup
 
-logging.basicConfig(filename='vapix.log', filemode='w', level=logging.DEBUG)
-logging.info('Started')
-
 # pylint: disable=R0904
-
 
 class CameraControl:
     """

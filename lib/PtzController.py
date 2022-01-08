@@ -1,10 +1,17 @@
+# FIXME
+
+import os
 import time
 from enum import Enum, unique, auto
 from dataclasses import dataclass
 from collections import namedtuple
 
-from .hid import Device as HIDDevice
-from .hid import HIDException
+if os.name == 'nt':
+    from .hid import Device as HIDDevice
+    from .hid import HIDException
+else:
+    from .hidraw import Device as HIDDevice
+    from .hidraw import HIDException
 
 __all__ = [ 'HIDException', 'Buttons', 'Events', 'Event', 'PtzController' ]
 
@@ -62,17 +69,17 @@ class PtzController(object):
         }
 
         # Open the controller HID device
-        self.min_hold_time = hold_time
         self.hid_device = HIDDevice(vid, pid)
 
         # Set initial joystick state
+        self.min_hold_time = hold_time
         self.last_joystick_data = (0.0, 0.0, 0.0)
 
     def __enter__(self):
         return self
 
     def __exit__(self, type, value, traceback):
-        pass
+        self.hid_device.close()
 
     # Button Handling
     def _read_hid_data(self):

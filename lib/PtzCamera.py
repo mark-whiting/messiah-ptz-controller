@@ -1,5 +1,6 @@
 import sys
 import time
+import logging
 
 from .vapix import CameraControl
 from .PtzController import Buttons, Events, Event
@@ -65,51 +66,61 @@ class PtzCamera(object):
 
     def _handle_button_press(self, event: Event):
         if event.button is Buttons.J1:
+            logging.info('Going to preset "J1"')
             self._go_to_preset('J1')
         elif event.button is Buttons.J2:
+            logging.info('Going to preset "J2"')
             self._go_to_preset('J2')
         elif event.button is Buttons.J3:
+            logging.info('Going to preset "J3"')
             self._go_to_preset('J3')
         elif event.button is Buttons.J4:
+            logging.info('Going to preset "J4"')
             self._go_to_preset('J4')
         elif event.button is Buttons.L:
-            pass # FIXME
+            logging.warn('No action for button press "L"') # TODO
         elif event.button is Buttons.R:
-            pass # FIXME
+            logging.warn('No action for button press "R"') # TODO
 
     def _handle_button_press_with_mod(self, event: Event):
         value = (event.button, event.modifier)
 
         if   value == (Buttons.J1, Buttons.L):
-            pass # FIXME
+            logging.warn('No action for button press "J1" with modifier "L"') # TODO
         elif value == (Buttons.J2, Buttons.L):
-            pass # FIXME
+            logging.warn('No action for button press "J2" with modifier "L"') # TODO
         elif value == (Buttons.J3, Buttons.L):
-            pass # FIXME
+            logging.warn('No action for button press "J3" with modifier "L"') # TODO
         elif value == (Buttons.J4, Buttons.L):
-            pass # FIXME
+            logging.warn('No action for button press "J4" with modifier "L"') # TODO
         elif value == (Buttons.J1, Buttons.R):
+            logging.info('Setting preset "J1"')
             self._set_preset('J1')
         elif value == (Buttons.J2, Buttons.R):
+            logging.info('Setting preset "J2"')
             self._set_preset('J2')
         elif value == (Buttons.J3, Buttons.R):
+            logging.info('Setting preset "J3"')
             self._set_preset('J3')
         elif value == (Buttons.J4, Buttons.R):
+            logging.info('Setting preset "J4"')
             self._set_preset('J4')
 
     def _handle_button_hold(self, event:Event):
         if   event.button is Buttons.J1:
+            logging.info('Moving camera to home position')
             self._go_home()
         elif event.button is Buttons.J2:
-            pass # FIXME
+            logging.warn('No action for button hold "J2"') # TODO
         elif event.button is Buttons.J3:
-            pass # FIXME
+            logging.warn('No action for button hold "J3"') # TODO
         elif event.button is Buttons.J4:
-            pass # FIXME
+            logging.warn('No action for button hold "J4"') # TODO
         elif event.button is Buttons.L:
+            logging.info('Re-enabling camera auto-focus')
             self._reset_focus()
         elif event.button is Buttons.R:
-            pass # FIXME
+            logging.warn('No action for button hold "R"') # TODO
 
     def _handle_button_event(self, event: Event):
         if event.type is Events.BTN_PRESS:

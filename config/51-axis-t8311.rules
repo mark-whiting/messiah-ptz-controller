@@ -1,0 +1,2 @@
+SUBSYSTEM=="usb", ATTR{idVendor}=="07c0", ATTR{idProduct}=="1131", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl", SYMLINK+="axis-t8311-%n"
+KERNEL=="hidraw*", ATTRS{idVendor}=="07c0", ATTRS{idProduct}=="1131", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl"
