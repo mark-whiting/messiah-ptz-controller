@@ -1,3 +1,13 @@
+# SPDX-License-Identifier: MIT
+################################################################################
+# hid.py
+#
+# Copyright (c) 2019 Austin Morton
+# Copyright (c) 2022 Mark Whiting
+#
+# This was derived and modified from the pyhidapi package.
+# https://github.com/apmorton/pyhidapi
+################################################################################
 import os
 import ctypes
 import atexit

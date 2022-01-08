@@ -6,6 +6,7 @@
 # Copyright (c) 2022 Mark Whiting
 #
 # This was derived and modified from the sensecam-control package.
+# https://github.com/smartsenselab/sensecam-control
 ################################################################################
 """
 Library for control AXIS PTZ cameras using Vapix
