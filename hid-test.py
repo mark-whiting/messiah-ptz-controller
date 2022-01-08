@@ -2,7 +2,7 @@
 ################################################################################
 # hid-test.py
 #
-# Copyright (c) 2022, Mark Whiting
+# Copyright (c) 2022 Mark Whiting
 #
 # This program can be used to test connectivity to the AXIS T8311 joystick. It
 # will print out joystick events as input is provided to the joystick to verify

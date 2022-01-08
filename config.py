@@ -2,7 +2,7 @@
 ################################################################################
 # config.py
 #
-# Copyright (c) 2022, Mark Whiting
+# Copyright (c) 2022 Mark Whiting
 #
 # This file holds all of the configuration for the messiah-ptz-controller.py
 # program.

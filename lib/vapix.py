@@ -1,3 +1,12 @@
+# SPDX-License-Identifier: MIT
+################################################################################
+# vapix.py
+#
+# Copyright (c) 2019 Igor Dias
+# Copyright (c) 2022 Mark Whiting
+#
+# This was derived and modified from the sensecam-control package.
+################################################################################
 """
 Library for control AXIS PTZ cameras using Vapix
 """

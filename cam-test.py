@@ -2,7 +2,7 @@
 ################################################################################
 # cam-test.py
 #
-# Copyright (c) 2022, Mark Whiting
+# Copyright (c) 2022 Mark Whiting
 #
 # This program can be used to test network connectivity to the AXIS V5914 PTZ
 # camera. It sends a few camera movement commands to verify everything is

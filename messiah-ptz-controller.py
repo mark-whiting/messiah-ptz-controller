@@ -2,7 +2,7 @@
 ################################################################################
 # messiah-ptz-controller.py
 #
-# Copyright (c) 2022, Mark Whiting
+# Copyright (c) 2022 Mark Whiting
 #
 # This program reads data from the AXIS T8311 Joystick and based on the inputs
 # sends network commands to an AXIS V5914 PTZ camera.
