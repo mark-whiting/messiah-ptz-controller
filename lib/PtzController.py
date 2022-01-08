@@ -1,7 +1,16 @@
-# FIXME
+# SPDX-License-Identifier: MIT
+################################################################################
+# PtzController.py
+#
+# Copyright (c) 2022 Mark Whiting
+#
+# This module provides the PtzController class. This class reads the state of
+# an AXIS T8311 Joystick and generates events for the PtzCamera class.
+################################################################################
 
 import os
 import time
+
 from enum import Enum, unique, auto
 from dataclasses import dataclass
 from collections import namedtuple

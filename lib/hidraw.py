@@ -1,4 +1,13 @@
-# FIXME
+# SPDX-License-Identifier: MIT
+################################################################################
+# hidraw.py
+#
+# Copyright (c) 2022 Mark Whiting
+#
+# This implements a subset of the pyhidapi interface but directly reads the
+# Linux hidraw devices. This is not cross-platform and will only work on Linux.
+# It has been tested on a Raspberry Pi.
+################################################################################
 
 import pathlib
 
