@@ -1,4 +1,12 @@
-# FIXME
+# SPDX-License-Identifier: MIT
+################################################################################
+# messiah-ptz-controller.py
+#
+# Copyright (c) 2022, Mark Whiting
+#
+# This program reads data from the AXIS T8311 Joystick and based on the inputs
+# sends network commands to an AXIS V5914 PTZ camera.
+################################################################################
 
 import sys
 import time
@@ -7,16 +15,12 @@ import logging
 from lib.PtzController import *
 from lib.PtzCamera import *
 
-CAM_IP='192.168.1.2'
-CAM_USER='root'
-CAM_PW='Messiah'
+from config import *
 
-HID_VID = 0x07C0
-HID_PID = 0x1131
-BUTTON_HOLD_TIME = 2.0
-
-###
-if __name__ == '__main__':
+################################################################################
+# Main
+################################################################################
+def main():
     controller = None
     camera = None
 
@@ -50,4 +54,7 @@ if __name__ == '__main__':
 
     logging.info('Finished')
     sys.exit(0)
+
+if __name__ == '__main__':
+    main()
 

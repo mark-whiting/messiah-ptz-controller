@@ -1,10 +1,16 @@
-# FIXME
+# SPDX-License-Identifier: MIT
+################################################################################
+# cam-test.py
+#
+# Copyright (c) 2022, Mark Whiting
+#
+# This program can be used to test network connectivity to the AXIS V5914 PTZ
+# camera. It sends a few camera movement commands to verify everything is
+# functional.
+################################################################################
 
 from lib.PtzCamera import *
-
-CAM_IP='192.168.1.2'
-CAM_USER='root'
-CAM_PW='Messiah'
+from config import *
 
 camera = PtzCamera(CAM_IP, CAM_USER, CAM_PW)
 
