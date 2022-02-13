@@ -49,7 +49,7 @@ class PtzCamera(object):
 
     def _go_to_preset(self, name):
         self.camera.go_to_server_preset_name(name, 50)
-        self._wait_for_movement_end()
+        #self._wait_for_movement_end()
 
     def _set_preset(self, name):
         self._wait_for_movement_end()

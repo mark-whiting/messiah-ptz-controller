@@ -90,6 +90,9 @@ class PtzController(object):
     def __exit__(self, type, value, traceback):
         self.hid_device.close()
 
+    def close(self):
+        self.hid_device.close()
+
     # Button Handling
     def _read_hid_data(self):
         return self.hid_device.read(4)
