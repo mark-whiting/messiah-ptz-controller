@@ -15,8 +15,10 @@ import threading
 
 import netifaces
 import ipaddress
+import requests
 
 from zeroconf import ServiceBrowser, Zeroconf
+from ping3 import ping
 
 from lib.PtzController import *
 from lib.PtzCamera import *
@@ -38,6 +40,16 @@ class CameraThread(threading.Thread):
     def shutdown(self):
         self._shutdownEvent.set()
 
+    def _cleanup_hid(self):
+        if self._controller is not None:
+            self._controller.close()
+        self._controller = None
+
+    def _cleanup_camera(self):
+        if self._camera is not None:
+            self._camera.close()
+        self._camera = None
+
     def _update(self):
         try:
             if self._controller is None:
@@ -54,14 +66,22 @@ class CameraThread(threading.Thread):
 
         except HIDException as e:
             logging.error('Failed to open HID device: "%s"', repr(e))
-            controller = None
+            self._cleanup_hid()
             time.sleep(1)
 
-        # TODO: detect when camera not connected??
+        except (requests.RequestException, requests.ConnectionError, requests.HTTPError, requests.Timeout) as e:
+            logging.error('Error communicating with Camera on network: "%s"', repr(e))
+            self._cleanup_camera()
+            time.sleep(1)
 
         except Exception as e:
             logging.error('Unhandled exception: "%s"', repr(e))
             return False
+
+        if ping(self._ip, timeout=1) == None:
+            logging.error('Failed to locate Camera on network')
+            self._cleanup_camera()
+            time.sleep(1)
 
         return True
 
@@ -74,11 +94,8 @@ class CameraThread(threading.Thread):
 
         logging.info('CameraThread: exiting')
 
-        if self._controller is not None:
-            self._controller.close()
-        if self._camera is not None:
-            # Cleanup camera???
-            pass
+        self._cleanup_hid()
+        self._cleanup_camera()
 
 
 ################################################################################
@@ -156,6 +173,7 @@ def main():
         while True:
             time.sleep(0.1)
     except KeyboardInterrupt:
+        logging.info('Caught keyboard interrupt, exiting...')
         pass
     finally:
         zeroconf.close()

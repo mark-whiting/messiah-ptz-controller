@@ -80,6 +80,9 @@ class Device(object):
     def __exit__(self):
         pass
 
+    def close(self):
+        pass
+
     def read(self, size, timeout=None):
         try:
             data = open(self.hid_path, 'rb').read(size)

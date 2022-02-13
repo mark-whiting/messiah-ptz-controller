@@ -73,7 +73,7 @@ class CameraControl:
 
         payload2 = CameraControl.__merge_dicts(payload, base_q_args)
 
-        resp = self.__session.get(url, params=payload2)
+        resp = self.__session.get(url, params=payload2, timeout=2)
 
         if (resp.status_code != 200) and (resp.status_code != 204):
             soup = BeautifulSoup(resp.text, features="lxml")
@@ -88,6 +88,9 @@ class CameraControl:
 
     def _camera_config(self, payload: dict):
         return self._gen_camera_command(self.__config_url, payload)
+
+    def close(self):
+        self.__session.close()
 
     def absolute_focus(self, focus: int = None, speed: int = None):
         """

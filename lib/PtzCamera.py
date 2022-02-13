@@ -32,7 +32,7 @@ class PtzCamera(object):
         return self
 
     def __exit__(self, type, value, traceback):
-        pass
+        self.camera.close()
 
     def _wait_for_movement_end(self):
         last_pos = self.camera.get_ptz()
@@ -142,6 +142,9 @@ class PtzCamera(object):
             self._handle_button_press_with_mod(event)
         elif event.type is Events.BTN_HOLD:
             self._handle_button_hold(event)
+
+    def close(self):
+        self.camera.close()
 
     def handle_event(self, event: Event):
         # Check for camera pan/tilt/zoom
