@@ -21,18 +21,29 @@ __all__ = [ 'PtzCamera' ]
 # Camera class
 class PtzCamera(object):
     def __init__(self, ip: str, user: str, password: str):
-        # Open connection to the camera
-        self.camera = CameraControl(ip, user, password)
-        self.camera.set_speed(100)
-
         self.moving = False
         self.focus = False
+        self.speed = 50
+
+        self._load_settings()
+
+        # Open connection to the camera
+        self.camera = CameraControl(ip, user, password)
+        self.camera.set_speed(self.speed)
 
     def __enter__(self):
         return self
 
     def __exit__(self, type, value, traceback):
         self.camera.close()
+
+    def _load_settings(self):
+        # TODO: use pickle
+        pass
+
+    def _save_settings(self):
+        # TODO: use pickle
+        pass
 
     def _wait_for_movement_end(self):
         last_pos = self.camera.get_ptz()
@@ -48,7 +59,7 @@ class PtzCamera(object):
         self._wait_for_movement_end()
 
     def _go_to_preset(self, name):
-        self.camera.go_to_server_preset_name(name, 50)
+        self.camera.go_to_server_preset_name(name, self.speed)
         #self._wait_for_movement_end()
 
     def _set_preset(self, name):
@@ -99,13 +110,21 @@ class PtzCamera(object):
         value = (event.button, event.modifier)
 
         if   value == (Buttons.J1, Buttons.L):
-            logging.warn('No action for button press "J1" with modifier "L"') # TODO
+            logging.info('Settings camera speed to 25%')
+            self.speed = 25
+            self._save_settings()
         elif value == (Buttons.J2, Buttons.L):
-            logging.warn('No action for button press "J2" with modifier "L"') # TODO
+            logging.info('Settings camera speed to 50%')
+            self.speed = 50
+            self._save_settings()
         elif value == (Buttons.J3, Buttons.L):
-            logging.warn('No action for button press "J3" with modifier "L"') # TODO
+            logging.info('Settings camera speed to 75%')
+            self.speed = 75
+            self._save_settings()
         elif value == (Buttons.J4, Buttons.L):
-            logging.warn('No action for button press "J4" with modifier "L"') # TODO
+            logging.info('Settings camera speed to 100%')
+            self.speed = 100
+            self._save_settings()
         elif value == (Buttons.J1, Buttons.R):
             logging.info('Setting preset "J1"')
             self._set_preset('J1')
