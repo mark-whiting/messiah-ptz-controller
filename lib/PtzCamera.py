@@ -9,12 +9,16 @@
 # VAPIX API.
 ################################################################################
 
+import os
 import sys
 import time
+import json
 import logging
 
 from .vapix import CameraControl
 from .PtzController import Buttons, Events, Event
+
+PTZ_CAMERA_SETTINGS = 'PtzCameraSettings.json'
 
 __all__ = [ 'PtzCamera' ]
 
@@ -38,12 +42,24 @@ class PtzCamera(object):
         self.camera.close()
 
     def _load_settings(self):
-        # TODO: use pickle
-        pass
+        if not os.path.exists(PTZ_CAMERA_SETTINGS):
+            return
+
+        with open(PTZ_CAMERA_SETTINGS, 'r') as f:
+            settings_str = f.read()
+
+        try:
+            settings = json.loads(settings_str)
+            if 'camera_speed' in settings:
+                self.speed = settings['camera_speed']
+        except:
+            pass
 
     def _save_settings(self):
-        # TODO: use pickle
-        pass
+        settings = { 'camera_speed' : self.speed }
+        settings_str = json.dumps(settings, sort_keys=True, indent=4)
+        with open('PtzCameraSettings.json', 'w') as f:
+            f.write(settings_str)
 
     def _wait_for_movement_end(self):
         last_pos = self.camera.get_ptz()
